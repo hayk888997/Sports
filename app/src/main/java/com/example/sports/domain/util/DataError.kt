@@ -1,4 +1,4 @@
-package com.example.sports.domain.model
+package com.example.sports.domain.util
 
 sealed class DataError : Throwable() {
     object Network : DataError()
