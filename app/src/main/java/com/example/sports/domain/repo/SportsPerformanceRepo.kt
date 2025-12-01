@@ -7,5 +7,8 @@ import com.example.sports.domain.util.Result
 
 interface SportsPerformanceRepo {
     suspend fun getPerformances(filterType: FilterType): Result<List<SportPerformance>>
-    suspend fun storeSportPerformance(performance: SportPerformance, storageType: StorageType)
+    suspend fun storeSportPerformance(
+        performance: SportPerformance,
+        storageType: StorageType
+    ): Result<Unit>
 }

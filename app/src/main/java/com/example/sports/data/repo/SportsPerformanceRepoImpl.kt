@@ -56,8 +56,8 @@ class SportsPerformanceRepoImpl(
     override suspend fun storeSportPerformance(
         performance: SportPerformance,
         storageType: StorageType
-    ) {
-        when (storageType) {
+    ): Result<Unit> {
+        return when (storageType) {
             StorageType.LOCAL -> safeStoreLocal(performance)
             StorageType.REMOTE -> safeStoreRemote(performance)
         }
