@@ -8,14 +8,14 @@ import com.example.sports.domain.model.StorageType
 fun SportPerformance.toDto() = SportPerformanceDto(
     id = id,
     name = name,
-    location = location,
+    venue = venue,
     durationMinutes = durationMinutes
 )
 
 fun SportPerformanceDto.toDomain() = SportPerformance(
     id = id,
     name = name,
-    location = location,
+    venue = venue,
     durationMinutes = durationMinutes,
     storageType = StorageType.REMOTE
 )

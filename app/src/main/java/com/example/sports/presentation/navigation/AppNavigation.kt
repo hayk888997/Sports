@@ -20,13 +20,15 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = Routes.LIST_PERFORMANCES) {
         composable(Routes.LIST_PERFORMANCES) {
             ListPerformancesScreen(
-                viewModel = listVm,
-                onNavigateToInsert = { navController.navigate(Routes.INSERT_PERFORMANCE) }
+                listVm.uiState,
+                onNavigateToInsert = { navController.navigate(Routes.INSERT_PERFORMANCE) },
+                onEvent = listVm::onEvent,
             )
         }
         composable(Routes.INSERT_PERFORMANCE) {
             InsertPerformanceScreen(
-                viewModel = insertVm,
+                insertVm.uiState,
+                onEvent = insertVm::onEvent,
                 onSaved = {
                     navController.popBackStack()
                     listVm.onEvent(ListPerformancesEvent.Refresh)

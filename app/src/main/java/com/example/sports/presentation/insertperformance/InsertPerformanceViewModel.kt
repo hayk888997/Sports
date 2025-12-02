@@ -24,8 +24,8 @@ class InsertPerformanceViewModel(
                 uiState = uiState.copy(name = event.name)
             }
 
-            is InsertPerformanceEvent.LocationChanged -> {
-                uiState = uiState.copy(location = event.location)
+            is InsertPerformanceEvent.VenueChanged -> {
+                uiState = uiState.copy(venue = event.venue)
             }
 
             is InsertPerformanceEvent.DurationChanged -> {
@@ -48,14 +48,14 @@ class InsertPerformanceViewModel(
 
     private fun submitForm() {
         val duration = uiState.duration.toIntOrNull()
-        if (uiState.name.isBlank() || uiState.location.isBlank() || duration == null) {
+        if (uiState.name.isBlank() || uiState.venue.isBlank() || duration == null) {
             uiState = uiState.copy(errorMessage = "Please fill all fields correctly")
             return
         }
 
         val performance = SportPerformance(
             name = uiState.name,
-            location = uiState.location,
+            venue = uiState.venue,
             durationMinutes = duration,
             storageType = uiState.storageType
         )

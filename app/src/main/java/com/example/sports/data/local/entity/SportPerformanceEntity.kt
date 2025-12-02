@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class SportPerformanceEntity(
     @PrimaryKey val id: String,
     val name: String,
-    val location: String,
+    val venue: String,
     val durationMinutes: Int
 )

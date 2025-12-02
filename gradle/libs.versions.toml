@@ -1,6 +1,7 @@
 [versions]
 agp = "8.13.1"
 converterGson = "3.0.0"
+firebaseBom = "34.6.0"
 koinAndroid = "4.1.1"
 kotlin = "2.2.21"
 coreKtx = "1.17.0"
@@ -45,9 +46,15 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
+firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.4" }
 

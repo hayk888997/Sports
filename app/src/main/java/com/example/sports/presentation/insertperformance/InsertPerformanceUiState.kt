@@ -4,7 +4,7 @@ import com.example.sports.domain.model.StorageType
 
 data class InsertPerformanceUiState(
     val name: String = "",
-    val location: String = "",
+    val venue: String = "",
     val duration: String = "",
     val storageType: StorageType = StorageType.LOCAL,
     val isLoading: Boolean = false,

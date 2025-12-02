@@ -8,14 +8,14 @@ import com.example.sports.domain.model.StorageType
 fun SportPerformance.toEntity() = SportPerformanceEntity(
     id = id,
     name = name,
-    location = location,
+    venue = venue,
     durationMinutes = durationMinutes
 )
 
 fun SportPerformanceEntity.toDomain() = SportPerformance(
     id = id,
     name = name,
-    location = location,
+    venue = venue,
     durationMinutes = durationMinutes,
     storageType = StorageType.LOCAL
 )

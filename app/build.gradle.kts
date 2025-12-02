@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
+
 }
 
 android {
@@ -71,4 +73,10 @@ dependencies {
     implementation(libs.converter.gson)
 
     implementation(libs.androidx.navigation.compose)
+
+
+    implementation(platform(libs.firebase.bom))
+    implementation("com.google.firebase:firebase-firestore-ktx:25.1.4")
+    implementation("com.google.firebase:firebase-common-ktx:21.0.0")
+
 }

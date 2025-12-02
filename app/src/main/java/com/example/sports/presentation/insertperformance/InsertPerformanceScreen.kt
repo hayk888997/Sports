@@ -26,10 +26,11 @@ import com.example.sports.domain.model.StorageType
 
 @Composable
 fun InsertPerformanceScreen(
-    viewModel: InsertPerformanceViewModel,
+    uiState: InsertPerformanceUiState,
+    onEvent: (InsertPerformanceEvent) -> Unit,
     onSaved: () -> Unit
 ) {
-    val state = viewModel.uiState
+    val state = uiState
 
     LaunchedEffect(state.success) {
         if (state.success) {
@@ -48,21 +49,21 @@ fun InsertPerformanceScreen(
 
         OutlinedTextField(
             value = state.name,
-            onValueChange = { viewModel.onEvent(InsertPerformanceEvent.NameChanged(it)) },
+            onValueChange = { onEvent(InsertPerformanceEvent.NameChanged(it)) },
             label = { Text("Name") },
             modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
-            value = state.location,
-            onValueChange = { viewModel.onEvent(InsertPerformanceEvent.LocationChanged(it)) },
-            label = { Text("Location") },
+            value = state.venue,
+            onValueChange = { onEvent(InsertPerformanceEvent.VenueChanged(it)) },
+            label = { Text("Venue") },
             modifier = Modifier.fillMaxWidth()
         )
 
         OutlinedTextField(
             value = state.duration,
-            onValueChange = { viewModel.onEvent(InsertPerformanceEvent.DurationChanged(it)) },
+            onValueChange = { onEvent(InsertPerformanceEvent.DurationChanged(it)) },
             label = { Text("Duration (min)") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
@@ -72,18 +73,18 @@ fun InsertPerformanceScreen(
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             RadioButtonWithLabel(
                 selected = state.storageType == StorageType.LOCAL,
-                onClick = { viewModel.onEvent(InsertPerformanceEvent.StorageTypeChanged(StorageType.LOCAL)) },
+                onClick = { onEvent(InsertPerformanceEvent.StorageTypeChanged(StorageType.LOCAL)) },
                 label = "Local"
             )
             RadioButtonWithLabel(
                 selected = state.storageType == StorageType.REMOTE,
-                onClick = { viewModel.onEvent(InsertPerformanceEvent.StorageTypeChanged(StorageType.REMOTE)) },
+                onClick = { onEvent(InsertPerformanceEvent.StorageTypeChanged(StorageType.REMOTE)) },
                 label = "Remote"
             )
         }
 
         Button(
-            onClick = { viewModel.onEvent(InsertPerformanceEvent.Submit) },
+            onClick = { onEvent(InsertPerformanceEvent.Submit) },
             modifier = Modifier.fillMaxWidth(),
             enabled = !state.isLoading
         ) {

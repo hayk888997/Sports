@@ -23,18 +23,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sports.R
 import com.example.sports.domain.model.FilterType
 import com.example.sports.domain.model.StorageType
-
+import com.example.sports.presentation.insertperformance.InsertPerformanceEvent
 
 @Composable
 fun ListPerformancesScreen(
-    viewModel: ListPerformancesViewModel,
-    onNavigateToInsert: () -> Unit
+    uiState: ListPerformancesUiState,
+    onEvent: (ListPerformancesEvent) -> Unit,
+    onNavigateToInsert: () -> Unit,
 ) {
-    val state = viewModel.uiState
+    val state = uiState
 
     Scaffold(
         floatingActionButton = {
@@ -57,7 +59,7 @@ fun ListPerformancesScreen(
                     FilterChip(
                         selected = state.selectedFilter == type,
                         onClick = {
-                            viewModel.onEvent(ListPerformancesEvent.FilterChanged(type))
+                            onEvent(ListPerformancesEvent.FilterChanged(type))
                         },
                         label = { Text(type.name) }
                     )
@@ -90,7 +92,7 @@ fun ListPerformancesScreen(
                             ) {
                                 Column(modifier = Modifier.padding(12.dp)) {
                                     Text(item.name, fontWeight = FontWeight.Bold)
-                                    Text("Location: ${item.location}")
+                                    Text("Venue: ${item.venue}")
                                     Text("Duration: ${item.durationMinutes} min")
                                 }
                             }
@@ -100,4 +102,10 @@ fun ListPerformancesScreen(
             }
         }
     }
+}
+
+@Composable
+@Preview
+fun ListPerformancesScreenPreview() {
+    ListPerformancesScreen(ListPerformancesUiState(), {}, {})
 }
