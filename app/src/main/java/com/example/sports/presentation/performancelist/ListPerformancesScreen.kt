@@ -19,10 +19,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalConfiguration
-import com.example.sports.presentation.ui.components.ErrorSnackBar
-import com.example.sports.presentation.ui.components.FilterChips
-import com.example.sports.presentation.ui.components.LoadingIndicator
-import com.example.sports.presentation.ui.components.PerformanceList
+import com.example.sports.presentation.commmon.components.ErrorSnackBar
+import com.example.sports.presentation.commmon.components.FilterChips
+import com.example.sports.presentation.commmon.components.LoadingIndicator
+import com.example.sports.presentation.commmon.components.PerformanceList
 import com.example.sports.presentation.ui.theme.ExtraColors
 import com.example.sports.presentation.ui.theme.LocalExtraColors
 

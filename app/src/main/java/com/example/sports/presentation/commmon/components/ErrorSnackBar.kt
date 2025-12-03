@@ -1,4 +1,4 @@
-package com.example.sports.presentation.ui.components
+package com.example.sports.presentation.commmon.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

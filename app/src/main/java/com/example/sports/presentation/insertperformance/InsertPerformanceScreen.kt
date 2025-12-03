@@ -21,10 +21,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.sports.R
-import com.example.sports.presentation.ui.components.ErrorSnackBar
-import com.example.sports.presentation.ui.components.LoadingIndicator
-import com.example.sports.presentation.ui.components.PerformanceInputField
-import com.example.sports.presentation.ui.components.StorageSelector
+import com.example.sports.presentation.commmon.components.ErrorSnackBar
+import com.example.sports.presentation.commmon.components.LoadingIndicator
+import com.example.sports.presentation.commmon.components.PerformanceInputField
+import com.example.sports.presentation.commmon.components.StorageSelector
 import com.example.sports.presentation.ui.theme.LocalExtraColors
 
 @Composable
