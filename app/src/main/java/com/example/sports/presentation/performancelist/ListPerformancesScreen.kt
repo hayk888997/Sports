@@ -1,7 +1,6 @@
 package com.example.sports.presentation.performancelist
 
 import android.content.res.Configuration
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,10 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import com.example.sports.R
 import com.example.sports.presentation.commmon.components.ErrorSnackBar
 import com.example.sports.presentation.commmon.components.FilterChips
 import com.example.sports.presentation.commmon.components.LoadingIndicator
@@ -37,10 +36,9 @@ fun ListPerformancesScreen(
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     Scaffold(
-        containerColor = extraColors.screenBg,
         floatingActionButton = {
             FloatingActionButton(onClick = onNavigateToInsert) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                Icon(painter = painterResource(id = R.drawable.ic_add), contentDescription = null)
             }
         }
     ) { padding ->
@@ -71,8 +69,7 @@ private fun Landscape(
 ) {
     Row(
         modifier = modifier
-            .padding(16.dp)
-            .animateContentSize(),
+            .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
@@ -98,8 +95,7 @@ private fun Portrait(
 ) {
     Column(
         modifier = modifier
-            .padding(16.dp)
-            .animateContentSize(),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 

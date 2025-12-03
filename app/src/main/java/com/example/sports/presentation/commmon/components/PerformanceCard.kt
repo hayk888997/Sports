@@ -26,9 +26,13 @@ fun PerformanceCard(
     extraColors: ExtraColors
 ) {
     val bgColor = when (item.storageType) {
-        StorageType.LOCAL -> extraColors.localBg
-        StorageType.REMOTE -> extraColors.remoteBg
+//        StorageType.LOCAL -> extraColors.localBg
+//        StorageType.REMOTE -> extraColors.remoteBg
+        StorageType.LOCAL -> Color(0xFF2F5B8A)
+        StorageType.REMOTE -> Color(0xFFF6C744)
     }
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()

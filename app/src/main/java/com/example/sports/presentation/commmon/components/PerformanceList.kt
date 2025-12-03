@@ -19,18 +19,18 @@ fun PerformanceList(
     extraColors: ExtraColors,
     onRefresh: () -> Unit
 ) {
-
     val listState = rememberLazyListState()
-
 
     PullToRefreshBox(
         isRefreshing = false,
         onRefresh = onRefresh,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+            .padding(8.dp)
     ) {
         LazyColumn(
             state = listState,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(

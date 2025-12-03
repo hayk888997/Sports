@@ -33,12 +33,10 @@ fun InsertPerformanceScreen(
     onEvent: (InsertPerformanceEvent) -> Unit,
     onSaved: () -> Unit
 ) {
-    val state = uiState
-    val scrollState = rememberScrollState()
     val extraColors = LocalExtraColors.current
 
-    LaunchedEffect(state.success) {
-        if (state.success) onSaved()
+    LaunchedEffect(uiState.success) {
+        if (uiState.success) onSaved()
     }
 
     Column(
@@ -46,7 +44,7 @@ fun InsertPerformanceScreen(
             .fillMaxSize()
             .background(extraColors.screenBg)
             .padding(16.dp)
-            .verticalScroll(scrollState),
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
@@ -56,42 +54,42 @@ fun InsertPerformanceScreen(
         )
 
         PerformanceInputField(
-            value = state.name,
+            value = uiState.name,
             onValueChange = { onEvent(InsertPerformanceEvent.NameChanged(it)) },
             label = stringResource(R.string.insert_performance_field_name)
         )
 
         PerformanceInputField(
-            value = state.venue,
+            value = uiState.venue,
             onValueChange = { onEvent(InsertPerformanceEvent.VenueChanged(it)) },
             label = stringResource(R.string.insert_performance_field_venue)
         )
 
         PerformanceInputField(
-            value = state.duration,
+            value = uiState.duration,
             onValueChange = { onEvent(InsertPerformanceEvent.DurationChanged(it)) },
             label = stringResource(R.string.insert_performance_field_duration),
             keyboardType = KeyboardType.Number
         )
 
         StorageSelector(
-            selected = state.storageType,
+            selected = uiState.storageType,
             onSelect = { onEvent(InsertPerformanceEvent.StorageTypeChanged(it)) }
         )
 
         Button(
             onClick = { onEvent(InsertPerformanceEvent.Submit) },
             modifier = Modifier.fillMaxWidth(),
-            enabled = !state.isLoading,
+            enabled = !uiState.isLoading,
         ) {
             Text(stringResource(R.string.insert_performance_btn_save))
         }
 
-        if (state.isLoading) {
+        if (uiState.isLoading) {
             LoadingIndicator()
         }
-        if (!state.errorMessage.isNullOrEmpty()) {
-            ErrorSnackBar(state.errorMessage, extraColors)
+        if (!uiState.errorMessage.isNullOrEmpty()) {
+            ErrorSnackBar(uiState.errorMessage, extraColors)
         }
 
     }
