@@ -17,8 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.example.sports.R
 import com.example.sports.presentation.ui.components.ErrorSnackBar
 import com.example.sports.presentation.ui.components.LoadingIndicator
 import com.example.sports.presentation.ui.components.PerformanceInputField
@@ -32,6 +34,7 @@ fun InsertPerformanceScreen(
     onSaved: () -> Unit
 ) {
     val state = uiState
+    val scrollState = rememberScrollState()
     val extraColors = LocalExtraColors.current
 
     LaunchedEffect(state.success) {
@@ -43,31 +46,31 @@ fun InsertPerformanceScreen(
             .fillMaxSize()
             .background(extraColors.screenBg)
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
         Text(
-            "Add Performance",
+            stringResource(R.string.insert_performance_title),
             style = MaterialTheme.typography.headlineMedium
         )
 
         PerformanceInputField(
             value = state.name,
             onValueChange = { onEvent(InsertPerformanceEvent.NameChanged(it)) },
-            label = "Name"
+            label = stringResource(R.string.insert_performance_field_name)
         )
 
         PerformanceInputField(
             value = state.venue,
             onValueChange = { onEvent(InsertPerformanceEvent.VenueChanged(it)) },
-            label = "Venue"
+            label = stringResource(R.string.insert_performance_field_venue)
         )
 
         PerformanceInputField(
             value = state.duration,
             onValueChange = { onEvent(InsertPerformanceEvent.DurationChanged(it)) },
-            label = "Duration (min)",
+            label = stringResource(R.string.insert_performance_field_duration),
             keyboardType = KeyboardType.Number
         )
 
@@ -81,7 +84,7 @@ fun InsertPerformanceScreen(
             modifier = Modifier.fillMaxWidth(),
             enabled = !state.isLoading,
         ) {
-            Text("Save")
+            Text(stringResource(R.string.insert_performance_btn_save))
         }
 
         if (state.isLoading) {

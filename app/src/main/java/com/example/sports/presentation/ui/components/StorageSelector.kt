@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.sports.R
 import com.example.sports.domain.model.StorageType
 import com.example.sports.presentation.insertperformance.RadioButtonWithLabel
 
@@ -15,19 +17,19 @@ fun StorageSelector(
     onSelect: (StorageType) -> Unit
 ) {
     Column {
-        Text("Save to:")
+        Text(text = stringResource(R.string.insert_performance_selection_storage_title))
 
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             RadioButtonWithLabel(
                 selected = selected == StorageType.LOCAL,
                 onClick = { onSelect(StorageType.LOCAL) },
-                label = "Local"
+                label = stringResource(R.string.insert_performance_selection_storage_local)
             )
 
             RadioButtonWithLabel(
                 selected = selected == StorageType.REMOTE,
                 onClick = { onSelect(StorageType.REMOTE) },
-                label = "Remote"
+                label = stringResource(R.string.insert_performance_selection_storage_remote)
             )
         }
     }

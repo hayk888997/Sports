@@ -62,7 +62,7 @@ fun SportsTheme(
     val extraColors =
         if (darkTheme) {
             ExtraColors(
-                screenBg = ScreenBgLight,
+                screenBg = ScreenBgDark,
                 localBg = LocalBgDark,
                 remoteBg = RemoteBgDark,
                 error = ErrorRed
