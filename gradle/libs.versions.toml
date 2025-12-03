@@ -2,6 +2,8 @@
 agp = "8.13.1"
 converterGson = "3.0.0"
 firebaseBom = "34.6.0"
+firebaseCommonKtx = "21.0.0"
+firebaseFirestoreKtx = "25.1.4"
 koinAndroid = "4.1.1"
 kotlin = "2.2.21"
 coreKtx = "1.17.0"
@@ -11,6 +13,8 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.0"
 composeBom = "2025.11.01"
+material3 = "1.4.0"
+materialIconsCore = "1.7.8"
 materialIconsExtended = "*"
 navigationCompose = "2.9.6"
 retrofit = "3.0.0"
@@ -19,10 +23,13 @@ ksp = "2.1.21-2.0.1"
 
 
 [libraries]
-androidx-compose-material-icons-extended = { module = "androidx.compose.material3:material-icons-extended", version.ref = "materialIconsExtended" }
+androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+google-firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -35,7 +42,6 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -47,8 +53,6 @@ koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
-firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx" }
 
 
 [plugins]
