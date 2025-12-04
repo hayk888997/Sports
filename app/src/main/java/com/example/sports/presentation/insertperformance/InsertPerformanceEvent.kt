@@ -8,5 +8,6 @@ sealed class InsertPerformanceEvent {
     data class DurationChanged(val duration: String) : InsertPerformanceEvent()
     data class StorageTypeChanged(val storageType: StorageType) : InsertPerformanceEvent()
     object Submit : InsertPerformanceEvent()
+    object OnSuccessHandled: InsertPerformanceEvent()
     object ErrorConsumed : InsertPerformanceEvent()
 }

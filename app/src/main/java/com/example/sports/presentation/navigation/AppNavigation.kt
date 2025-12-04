@@ -18,25 +18,23 @@ fun AppNavigation() {
     val listVm: ListPerformancesViewModel = koinViewModel()
     val navController = rememberNavController()
 
-    SportsTheme {
-        NavHost(navController = navController, startDestination = Routes.LIST_PERFORMANCES) {
-            composable(Routes.LIST_PERFORMANCES) {
-                ListPerformancesScreen(
-                    listVm.uiState,
-                    onNavigateToInsert = { navController.navigate(Routes.INSERT_PERFORMANCE) },
-                    onEvent = listVm::onEvent,
-                )
-            }
-            composable(Routes.INSERT_PERFORMANCE) {
-                InsertPerformanceScreen(
-                    insertVm.uiState,
-                    onEvent = insertVm::onEvent,
-                    onSaved = {
-                        navController.popBackStack()
-                        listVm.onEvent(ListPerformancesEvent.Refresh)
-                    }
-                )
-            }
+    NavHost(navController = navController, startDestination = Routes.LIST_PERFORMANCES) {
+        composable(Routes.LIST_PERFORMANCES) {
+            ListPerformancesScreen(
+                listVm.uiState,
+                onNavigateToInsert = { navController.navigate(Routes.INSERT_PERFORMANCE) },
+                onEvent = listVm::onEvent,
+            )
+        }
+        composable(Routes.INSERT_PERFORMANCE) {
+            InsertPerformanceScreen(
+                insertVm.uiState,
+                onEvent = insertVm::onEvent,
+                onSaved = {
+                    navController.popBackStack()
+                    listVm.onEvent(ListPerformancesEvent.Refresh)
+                }
+            )
         }
     }
 }

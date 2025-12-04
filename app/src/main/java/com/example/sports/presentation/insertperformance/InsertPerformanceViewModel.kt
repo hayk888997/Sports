@@ -7,9 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sports.domain.model.SportPerformance
 import com.example.sports.domain.usecase.StoreSportPerformanceUseCase
-import com.example.sports.domain.util.DataError
 import kotlinx.coroutines.launch
 import com.example.sports.domain.util.Result
+import com.example.sports.presentation.commmon.AppError
+import com.example.sports.presentation.commmon.toAppError
 
 class InsertPerformanceViewModel(
     private val saveUseCase: StoreSportPerformanceUseCase
@@ -17,6 +18,10 @@ class InsertPerformanceViewModel(
 
     var uiState by mutableStateOf(InsertPerformanceUiState())
         private set
+
+    init {
+        uiState = InsertPerformanceUiState()
+    }
 
     fun onEvent(event: InsertPerformanceEvent) {
         when (event) {
@@ -37,20 +42,41 @@ class InsertPerformanceViewModel(
             }
 
             InsertPerformanceEvent.ErrorConsumed -> {
-                uiState = uiState.copy(errorMessage = null)
+                uiState = uiState.copy(error = null)
             }
 
             InsertPerformanceEvent.Submit -> {
                 submitForm()
+            }
+
+            InsertPerformanceEvent.OnSuccessHandled -> {
+                uiState = InsertPerformanceUiState()
             }
         }
     }
 
     private fun submitForm() {
         val duration = uiState.duration.toIntOrNull()
-        if (uiState.name.isBlank() || uiState.venue.isBlank() || duration == null) {
-            uiState = uiState.copy(errorMessage = "Please fill all fields correctly")
-            return
+        when {
+            uiState.name.isBlank() -> {
+                uiState = uiState.copy(error = AppError.EmptyName)
+                return
+            }
+
+            uiState.venue.isBlank() -> {
+                uiState = uiState.copy(error = AppError.EmptyVenue)
+                return
+            }
+
+            duration == null -> {
+                uiState = uiState.copy(error = AppError.InvalidDuration)
+                return
+            }
+
+            duration <= 0 -> {
+                uiState = uiState.copy(error = AppError.NegativeDuration)
+                return
+            }
         }
 
         val performance = SportPerformance(
@@ -61,23 +87,16 @@ class InsertPerformanceViewModel(
         )
 
         viewModelScope.launch {
-            uiState = uiState.copy(isLoading = true, success = false, errorMessage = null)
+            uiState = uiState.copy(isLoading = true, success = false, error = null)
 
             val result = saveUseCase(performance, uiState.storageType)
             uiState = when (result) {
                 is Result.Success -> uiState.copy(isLoading = false, success = true)
                 is Result.Error -> uiState.copy(
                     isLoading = false,
-                    errorMessage = mapError(result.error)
+                    error = result.error.toAppError()
                 )
             }
         }
-    }
-
-    private fun mapError(error: DataError): String = when (error) {
-        DataError.Network -> "Network error"
-        DataError.Database -> "Database error"
-        DataError.NotFound -> "Not found"
-        is DataError.Unknown -> "Unknown error: ${error.message}"
     }
 }

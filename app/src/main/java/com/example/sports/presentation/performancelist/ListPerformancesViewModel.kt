@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sports.domain.model.FilterType
+import com.example.sports.domain.model.StorageType
 import com.example.sports.domain.usecase.GetSportsPerformancesUseCase
-import com.example.sports.domain.util.DataError
 import kotlinx.coroutines.launch
 import com.example.sports.domain.util.Result
+import com.example.sports.presentation.commmon.toAppError
 
 class ListPerformancesViewModel(
     private val getUseCase: GetSportsPerformancesUseCase
@@ -25,42 +27,49 @@ class ListPerformancesViewModel(
         when (event) {
             is ListPerformancesEvent.FilterChanged -> {
                 uiState = uiState.copy(selectedFilter = event.filter)
-                loadPerformances()
             }
 
             ListPerformancesEvent.Refresh -> {
                 loadPerformances()
             }
 
-            ListPerformancesEvent.ErrorConsumed -> {
-                uiState = uiState.copy(errorMessage = null)
+            is ListPerformancesEvent.ScrollPositionChanged -> {
+                val newScrollState = when (uiState.selectedFilter) {
+                    FilterType.ALL -> uiState.scrollState.copy(all = event.position)
+                    FilterType.LOCAL -> uiState.scrollState.copy(local = event.position)
+                    FilterType.REMOTE -> uiState.scrollState.copy(remote = event.position)
+                }
+                uiState = uiState.copy(scrollState = newScrollState)
             }
         }
     }
 
     private fun loadPerformances() {
         viewModelScope.launch {
-            uiState = uiState.copy(isLoading = true, errorMessage = null)
+            uiState = uiState.copy(isLoading = true, error = null)
 
-            val result = getUseCase(uiState.selectedFilter)
-            uiState = when (result) {
-                is Result.Success -> uiState.copy(
-                    performances = result.data,
-                    isLoading = false
-                )
+            val allPerformancesResult = getUseCase(FilterType.ALL)
+
+            uiState = when (allPerformancesResult) {
+                is Result.Success -> {
+                    val allPerformances = allPerformancesResult.data
+                    val localPerformances =
+                        allPerformances.filter { it.storageType == StorageType.LOCAL }
+                    val remotePerformances =
+                        allPerformances.filter { it.storageType == StorageType.REMOTE }
+                    uiState.copy(
+                        allPerformances = allPerformances,
+                        localPerformances = localPerformances,
+                        remotePerformances = remotePerformances,
+                        isLoading = false
+                    )
+                }
 
                 is Result.Error -> uiState.copy(
                     isLoading = false,
-                    errorMessage = mapError(result.error)
+                    error = allPerformancesResult.error.toAppError()
                 )
             }
         }
-    }
-
-    private fun mapError(error: DataError): String = when (error) {
-        DataError.Network -> "Network error while loading"
-        DataError.Database -> "Local DB error"
-        DataError.NotFound -> "No data found"
-        is DataError.Unknown -> "Unexpected error: ${error.message}"
     }
 }

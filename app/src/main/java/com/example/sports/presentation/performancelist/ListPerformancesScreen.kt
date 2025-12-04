@@ -1,6 +1,5 @@
 package com.example.sports.presentation.performancelist
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import com.example.sports.R
 import com.example.sports.presentation.commmon.components.ErrorSnackBar
 import com.example.sports.presentation.commmon.components.FilterChips
 import com.example.sports.presentation.commmon.components.LoadingIndicator
-import com.example.sports.presentation.commmon.components.PerformanceList
+import com.example.sports.presentation.commmon.errorTextFor
+import com.example.sports.presentation.commmon.isLandscape
 import com.example.sports.presentation.ui.theme.ExtraColors
 import com.example.sports.presentation.ui.theme.LocalExtraColors
 
@@ -32,8 +31,6 @@ fun ListPerformancesScreen(
     onNavigateToInsert: () -> Unit,
 ) {
     val extraColors = LocalExtraColors.current
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     Scaffold(
         floatingActionButton = {
@@ -42,7 +39,7 @@ fun ListPerformancesScreen(
             }
         }
     ) { padding ->
-        if (isLandscape) {
+        if (isLandscape()) {
             Landscape(
                 Modifier.padding(padding),
                 state = uiState,
@@ -81,7 +78,7 @@ private fun Landscape(
         Content(
             state = state,
             extraColors = extraColors,
-            onRefresh = { onEvent(ListPerformancesEvent.Refresh) }
+            onEvent = onEvent
         )
     }
 }
@@ -109,7 +106,7 @@ private fun Portrait(
         Content(
             state = state,
             extraColors = extraColors,
-            onRefresh = { onEvent(ListPerformancesEvent.Refresh) }
+            onEvent = onEvent
         )
     }
 }
@@ -118,18 +115,20 @@ private fun Portrait(
 private fun Content(
     state: ListPerformancesUiState,
     extraColors: ExtraColors,
-    onRefresh: () -> Unit
+    onEvent: (ListPerformancesEvent) -> Unit,
 ) {
     when {
         state.isLoading -> LoadingIndicator()
 
-        state.errorMessage != null -> ErrorSnackBar(state.errorMessage, extraColors)
+        state.error != null -> ErrorSnackBar(errorTextFor(state.error), extraColors)
 
-        else -> PerformanceList(
-            items = state.performances,
-            extraColors = extraColors,
-            onRefresh = onRefresh
-        )
+        else -> {
+            PerformanceList(
+                state = state,
+                extraColors = extraColors,
+                onEvent = onEvent
+            )
+        }
     }
 }
 

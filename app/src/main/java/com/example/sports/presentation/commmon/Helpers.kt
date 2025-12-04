@@ -1,9 +1,8 @@
-package com.example.sports.presentation.util
+package com.example.sports.presentation.commmon
 
 import com.example.sports.domain.util.DataError
 import com.example.sports.domain.util.Result
 
-//TODO, improve and maybe move to common
 inline fun <T> Result<T>.onSuccess(action: (T) -> Unit): Result<T> {
     if (this is Result.Success) action(data)
     return this

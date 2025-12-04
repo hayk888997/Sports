@@ -5,5 +5,5 @@ import com.example.sports.domain.model.FilterType
 sealed class ListPerformancesEvent {
     data class FilterChanged(val filter: FilterType) : ListPerformancesEvent()
     object Refresh : ListPerformancesEvent()
-    object ErrorConsumed : ListPerformancesEvent()
+    data class ScrollPositionChanged(val position: Int) : ListPerformancesEvent()
 }

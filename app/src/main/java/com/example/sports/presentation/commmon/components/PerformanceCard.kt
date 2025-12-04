@@ -1,5 +1,6 @@
 package com.example.sports.presentation.commmon.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,18 +27,15 @@ fun PerformanceCard(
     extraColors: ExtraColors
 ) {
     val bgColor = when (item.storageType) {
-//        StorageType.LOCAL -> extraColors.localBg
-//        StorageType.REMOTE -> extraColors.remoteBg
-        StorageType.LOCAL -> Color(0xFF2F5B8A)
-        StorageType.REMOTE -> Color(0xFFF6C744)
+        StorageType.LOCAL -> extraColors.localBg
+        StorageType.REMOTE -> extraColors.remoteBg
     }
-
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(bgColor)
             .clip(RoundedCornerShape(8.dp))
+            .background(bgColor)
             .padding(8.dp)
     ) {
         Text(item.name, fontWeight = FontWeight.Bold)

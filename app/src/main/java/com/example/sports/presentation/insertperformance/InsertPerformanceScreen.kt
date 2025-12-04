@@ -25,6 +25,9 @@ import com.example.sports.presentation.commmon.components.ErrorSnackBar
 import com.example.sports.presentation.commmon.components.LoadingIndicator
 import com.example.sports.presentation.commmon.components.PerformanceInputField
 import com.example.sports.presentation.commmon.components.StorageSelector
+import com.example.sports.presentation.commmon.errorTextFor
+import com.example.sports.presentation.commmon.isLandscape
+import com.example.sports.presentation.ui.theme.ExtraColors
 import com.example.sports.presentation.ui.theme.LocalExtraColors
 
 @Composable
@@ -36,17 +39,68 @@ fun InsertPerformanceScreen(
     val extraColors = LocalExtraColors.current
 
     LaunchedEffect(uiState.success) {
-        if (uiState.success) onSaved()
+        if (uiState.success) {
+            onEvent(InsertPerformanceEvent.OnSuccessHandled)
+            onSaved()
+        }
     }
 
+    if (isLandscape()) {
+        LandscapeInsertLayout(uiState, extraColors, onEvent)
+    } else {
+        PortraitInsertLayout(uiState, extraColors, onEvent)
+    }
+}
+
+@Composable
+private fun PortraitInsertLayout(
+    uiState: InsertPerformanceUiState,
+    extraColors: ExtraColors,
+    onEvent: (InsertPerformanceEvent) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(extraColors.screenBg)
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
+
+        InputFieldsColumn(uiState, onEvent)
+        ActionsColumn(uiState, extraColors, onEvent)
+    }
+}
+
+@Composable
+private fun LandscapeInsertLayout(
+    uiState: InsertPerformanceUiState,
+    extraColors: ExtraColors,
+    onEvent: (InsertPerformanceEvent) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(extraColors.screenBg)
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(32.dp)
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            InputFieldsColumn(uiState, onEvent)
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            ActionsColumn(uiState, extraColors, onEvent)
+        }
+    }
+}
+
+@Composable
+private fun InputFieldsColumn(
+    uiState: InsertPerformanceUiState,
+    onEvent: (InsertPerformanceEvent) -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
         Text(
             stringResource(R.string.insert_performance_title),
@@ -71,6 +125,16 @@ fun InsertPerformanceScreen(
             label = stringResource(R.string.insert_performance_field_duration),
             keyboardType = KeyboardType.Number
         )
+    }
+}
+
+@Composable
+private fun ActionsColumn(
+    uiState: InsertPerformanceUiState,
+    extraColors: ExtraColors,
+    onEvent: (InsertPerformanceEvent) -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
         StorageSelector(
             selected = uiState.storageType,
@@ -88,10 +152,10 @@ fun InsertPerformanceScreen(
         if (uiState.isLoading) {
             LoadingIndicator()
         }
-        if (!uiState.errorMessage.isNullOrEmpty()) {
-            ErrorSnackBar(uiState.errorMessage, extraColors)
-        }
 
+        if (uiState.error != null) {
+            ErrorSnackBar(errorTextFor(uiState.error), extraColors)
+        }
     }
 }
 

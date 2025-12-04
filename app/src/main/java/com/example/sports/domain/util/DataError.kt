@@ -1,9 +1,19 @@
 package com.example.sports.domain.util
 
-//TODO , improve
-sealed class DataError : Throwable() {
+sealed class DataError {
+    // Networking / connectivity
     object Network : DataError()
-    object NotFound : DataError()
-    object Database : DataError()
+    object Timeout : DataError()
+
+    // Firestore / remote
+    object RemotePermissionDenied : DataError()
+    object RemoteNotFound : DataError()
+    object RemoteUnavailable : DataError()
+    object RemoteFailed : DataError()
+
+    // Local persistence (Room / SQLite)
+    object LocalFailed : DataError()
+
+    // Generic
     data class Unknown(val exception: Throwable) : DataError()
 }

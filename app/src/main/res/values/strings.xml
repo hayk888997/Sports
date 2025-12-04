@@ -18,6 +18,32 @@
 
     <string name="performance_venue">Venue: %1$s</string>
     <string name="performance_duration">Duration: %1$d min</string>
+    <string name="performance_empty_local_list">No local performances yet.</string>
+    <string name="performance_empty_remote_list">No remote performances found.</string>
+    <string name="performance_empty_all_list">No performances to show.</string>
+
+<!--    ERRORS -->
+    <!-- Validation -->
+    <string name="error_empty_name">Please enter a performance name.</string>
+    <string name="error_empty_venue">Please enter a venue.</string>
+    <string name="error_invalid_duration">Duration must be a valid number.</string>
+    <string name="error_negative_duration">Duration must be greater than zero.</string>
+
+    <!-- Local DB -->
+    <string name="error_local_failed">Issue with local database.</string>
+
+    <!-- Remote Firestore -->
+    <string name="error_remote_save_failed">Issue with the BackEnd.</string>
+    <string name="error_remote_load_failed">Failed to load remote performances.</string>
+    <string name="error_remote_permission_denied">You do not have permission to access this data.</string>
+    <string name="error_remote_not_found">Requested data was not found.</string>
+
+    <!-- Network -->
+    <string name="error_network_unavailable">No internet connection. Please try again later.</string>
+    <string name="error_timeout">The request took too long. Please try again.</string>
+
+    <!-- Unknown -->
+    <string name="error_unknown">Something went wrong. Please try again.</string>
 
 
 </resources>

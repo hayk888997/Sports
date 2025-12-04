@@ -86,10 +86,4 @@ fun SportsTheme(
             content = content
         )
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
 }
