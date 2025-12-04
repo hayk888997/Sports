@@ -9,7 +9,6 @@ import com.example.sports.data.local.entity.SportPerformanceEntity
 @Dao
 interface SportsPerformanceDao {
 
-    //Conflict can happen when randomUUID is the same, which possibility is super low
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(performance: SportPerformanceEntity)
 
