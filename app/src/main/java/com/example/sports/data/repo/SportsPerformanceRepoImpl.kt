@@ -7,7 +7,6 @@ import com.example.sports.data.remote.FirebaseRemoteDataSource
 import com.example.sports.data.remote.mapper.toDomain
 import com.example.sports.data.remote.mapper.toDto
 import com.example.sports.data.util.safeCall
-import com.example.sports.data.util.safeFlow
 import com.example.sports.domain.model.FilterType
 import com.example.sports.domain.model.SportPerformance
 import com.example.sports.domain.model.StorageType
@@ -22,14 +21,15 @@ class SportsPerformanceRepoImpl(
     private val remote: FirebaseRemoteDataSource
 ) : SportsPerformanceRepo {
 
+    //TODO, make sure we can't improve UX by observing flow of remote storage, and remove this
 //    override fun observePerformances(): Flow<Result<List<SportPerformance>>> =
 //        safeFlow {
 //            remote.observePerformances()
 //                .map { list -> list.map { it.toDomain() } }
 //        }
 
-    override suspend fun getPerformances(filter: FilterType): Result<List<SportPerformance>> =
-        when (filter) {
+    override suspend fun getPerformances(filterType: FilterType): Result<List<SportPerformance>> =
+        when (filterType) {
             FilterType.LOCAL -> getLocal()
             FilterType.REMOTE -> getRemote()
             FilterType.ALL -> coroutineScope {

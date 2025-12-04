@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class FirebaseRemoteDataSource(
     private val firebaseService: FirebaseService
 ) {
+    //TODO, make sure we can't improve UX by observing flow of remote storage, and remove this
     fun observePerformances(): Flow<List<SportPerformanceDto>> = firebaseService.observePerformances()
 
     suspend fun getPerformances(): List<SportPerformanceDto> =

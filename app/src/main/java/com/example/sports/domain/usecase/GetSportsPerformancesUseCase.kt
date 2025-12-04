@@ -8,7 +8,6 @@ import com.example.sports.domain.util.Result
 class GetSportsPerformancesUseCase(
     val repo: SportsPerformanceRepo
 ) {
-
     suspend operator fun invoke(filterType: FilterType): Result<List<SportPerformance>> {
         return repo.getPerformances(filterType)
     }

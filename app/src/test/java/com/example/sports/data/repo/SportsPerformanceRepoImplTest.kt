@@ -28,7 +28,6 @@ class SportsPerformanceRepoImplTest {
     fun setup() {
         dao = mockk(relaxed = true)
         remote = mockk(relaxed = true)
-        // spyk so we can stub private getLocal/getRemote for ALL-case tests
         repo = spyk(SportsPerformanceRepoImpl(dao, remote), recordPrivateCalls = true)
     }
 

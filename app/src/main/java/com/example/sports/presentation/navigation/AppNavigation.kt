@@ -9,7 +9,6 @@ import com.example.sports.presentation.insertperformance.InsertPerformanceViewMo
 import com.example.sports.presentation.performancelist.ListPerformancesEvent
 import com.example.sports.presentation.performancelist.ListPerformancesScreen
 import com.example.sports.presentation.performancelist.ListPerformancesViewModel
-import com.example.sports.presentation.ui.theme.SportsTheme
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
